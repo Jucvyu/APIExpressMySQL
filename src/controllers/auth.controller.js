@@ -69,7 +69,7 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.seeUser = async (req, res) => {
+exports.seeUserById = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -84,6 +84,24 @@ exports.seeUser = async (req, res) => {
         const user = rows[0];
 
         res.json(user);
+    } catch (error) {
+        console.error("ERROR COMPLETO:", JSON.stringify(error, null, 2));
+        console.error("SQL MESSAGE:", error.sqlMessage);
+        console.error("CODE:", error.code);
+        console.error("MESSAGE:", error.message);
+
+        res.status(500).json({
+            error: error.message,
+            code: error.code
+        });
+    }
+};
+
+exports.seeAllUsers = async (req, res) => {
+    try {
+        const [rows] = await pool.query("SELECT * FROM users");
+
+        res.json(rows);
     } catch (error) {
         console.error("ERROR COMPLETO:", JSON.stringify(error, null, 2));
         console.error("SQL MESSAGE:", error.sqlMessage);
