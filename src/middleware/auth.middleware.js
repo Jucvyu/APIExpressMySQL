@@ -13,4 +13,6 @@ module.exports = (req, res, next) => {
     } catch (error) {
         res.status(401).json({ message: "Token no valido" });
     }
+
+    console.log("USER:", req.user);
 }

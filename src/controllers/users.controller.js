@@ -65,7 +65,7 @@ exports.deleteUser = async (req, res) => {
     const { id } = req.params;
 
     try {
-        if (req.user.id !== parseInt(id)) {
+        if (req.user.role !== "admin" && req.user.id !== parseInt(id)) {
             return res.status(403).json({ message: "No autorizado" });
         }
 
