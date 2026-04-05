@@ -18,8 +18,15 @@ exports.register = async (req, res) => {
 
         res.json({ message: "Usuario registrado con exito" });
     } catch (error) {
-        console.error("ERROR REGISTER:", error);
-        res.status(500).json({ error: error.message });
+        console.error("ERROR COMPLETO:", JSON.stringify(error, null, 2));
+        console.error("SQL MESSAGE:", error.sqlMessage);
+        console.error("CODE:", error.code);
+        console.error("MESSAGE:", error.message);
+
+        res.status(500).json({
+            error: error.message,
+            code: error.code
+        });
     }
 }
 
@@ -50,7 +57,14 @@ exports.login = async (req, res) => {
 
         res.json({ token });
     } catch (error) {
-        console.error("ERROR REGISTER:", error);
-        res.status(500).json({ error: error.message });
+        console.error("ERROR COMPLETO:", JSON.stringify(error, null, 2));
+        console.error("SQL MESSAGE:", error.sqlMessage);
+        console.error("CODE:", error.code);
+        console.error("MESSAGE:", error.message);
+
+        res.status(500).json({
+            error: error.message,
+            code: error.code
+        });
     }
 };
