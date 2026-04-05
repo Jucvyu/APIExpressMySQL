@@ -2,6 +2,10 @@ const router = require("express").Router();
 const auth = require("../controllers/auth.controller");
 const verifyToken = require("../middleware/auth.middleware");
 
+router.post("/register", (req, res) => {
+    console.log("RUTA OK");
+    res.json({ ok: true });
+});
 router.post("/register", auth.register);
 router.post("/login", auth.login);
 

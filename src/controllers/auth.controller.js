@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 
 // Registro de usuario
 exports.register = async (req, res) => {
+    console.log("ENTRÓ A REGISTER");
+
     const { email, password } = req.body;
 
     try {
@@ -16,6 +18,7 @@ exports.register = async (req, res) => {
 
         res.json({ message: "Usuario registrado con exito" });
     } catch (error) {
+        console.error("ERROR REGISTER:", error);
         res.status(500).json({ error: error.message });
     }
 }
@@ -47,6 +50,7 @@ exports.login = async (req, res) => {
 
         res.json({ token });
     } catch (error) {
+        console.error("ERROR REGISTER:", error);
         res.status(500).json({ error: error.message });
     }
 };
