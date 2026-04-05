@@ -68,3 +68,31 @@ exports.login = async (req, res) => {
         });
     }
 };
+
+exports.seeUser = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const [rows] = await pool.query(
+            "SELECT * FROM users WHERE id = ?",
+            [id]
+        );
+
+        if (rows.length === 0)
+            return res.status(400).json({ message: "Usuario no existe" });
+
+        const user = rows[0];
+
+        res.json(user);
+    } catch (error) {
+        console.error("ERROR COMPLETO:", JSON.stringify(error, null, 2));
+        console.error("SQL MESSAGE:", error.sqlMessage);
+        console.error("CODE:", error.code);
+        console.error("MESSAGE:", error.message);
+
+        res.status(500).json({
+            error: error.message,
+            code: error.code
+        });
+    }
+};
