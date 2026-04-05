@@ -16,7 +16,7 @@ exports.getUser = async (req, res) => {
     const { id } = req.params;
 
     try {
-        if (req.user.id !== parseInt(id)) {
+        if (req.user.role !== "admin" && req.user.id !== parseInt(id)) {
             return res.status(403).json({ message: "No autorizado" });
         }
 
@@ -27,7 +27,6 @@ exports.getUser = async (req, res) => {
 
         if (rows.length === 0)
             return res.status(404).json({ message: "Usuario no existe" });
-
         res.json(rows[0]);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -40,7 +39,7 @@ exports.updateUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        if (req.user.id !== parseInt(id)) {
+        if (req.user.role !== "admin" && req.user.id !== parseInt(id)) {
             return res.status(403).json({ message: "No autorizado" });
         }
 
