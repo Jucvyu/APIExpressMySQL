@@ -5,13 +5,14 @@ const jwt = require("jsonwebtoken");
 // Registro de usuario
 exports.register = async (req, res) => {
     const { email, password } = req.body;
+    const role = "user";
 
     try {
         const hash = await bcrypt.hash(password, 10);
 
         await pool.query(
-            "INSERT INTO users (email, password) VALUES (?, ?)",
-            [email, hash]
+            "INSERT INTO users (email, password) VALUES (?, ?, ?)",
+            [email, hash, role]
         );
 
         res.json({ message: "Usuario registrado con exito" });
