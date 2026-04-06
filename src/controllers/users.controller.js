@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 // Obtener todos
 exports.getUsers = async (req, res) => {
     try {
-        const [rows] = await pool.query("SELECT id, email FROM users");
+        const [rows] = await pool.query("SELECT * FROM users");
         res.json(rows);
     } catch (error) {
         res.status(500).json({ error: error.message });
