@@ -321,14 +321,18 @@ document.querySelectorAll(".tab-button").forEach((button) => {
 // ─────────────────────────────────────────────
 elements.loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+    const form = event.currentTarget; // Guardamos la referencia inmediatamente
     clearNotification();
-    const formData = new FormData(event.currentTarget);
-    const payload = Object.fromEntries(formData.entries()); // Convierte FormData a objeto plano
+    
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
 
     try {
         await login(payload);
         showNotification("Sesion iniciada correctamente.");
-        event.currentTarget.reset();
+        
+        // Verificamos si el formulario aún existe en el DOM antes de resetear
+        if (form) form.reset(); 
     } catch (error) {
         showNotification(getErrorMessage(error), "error");
     }
